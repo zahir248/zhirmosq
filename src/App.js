@@ -156,10 +156,10 @@ export default function App() {
               className="d-md-none me-2 btn btn-sm rounded-circle"
               style={{ background: darkMode ? '#2D3748' : '#EDF2F7' }}
             >
-              <i className={`bi ${menuOpen ? 'bi-x' : 'bi-list'}`}></i>
+              <i className={`bi ${menuOpen ? 'bi-x' : 'bi-list'} ${darkMode ? 'text-white' : 'text-dark'}`} ></i>            
             </button>
             <div className="d-flex align-items-center">
-              <i className={`bi bi-geo-alt-fill me-2 ${darkMode ? 'text-success' : 'text-success'}`}></i>
+              {/* <i className={`bi bi-geo-alt-fill me-2 ${darkMode ? 'text-success' : 'text-success'}`}></i> */}
               <h1 className="fs-4 fw-bold mb-0">ZhirMosq</h1>
             </div>
           </div>
@@ -186,9 +186,10 @@ export default function App() {
                 placeholder="Search mosques..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`form-control rounded-pill ${darkMode ? 'bg-secondary text-white' : 'bg-light text-dark'}`}
+                className={`form-control rounded-pill ${darkMode ? 'bg-secondary border-secondary text-white' : 'bg-light text-dark'}`}
+                style={{ caretColor: darkMode ? 'white' : 'black' }}
               />
-              <i className="bi bi-search position-absolute end-0 top-50 translate-middle-y pe-3 text-muted"></i>
+              <i className={`bi bi-search position-absolute end-0 top-50 translate-middle-y pe-3 ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}></i>
             </div>
           </div>
         </div>
@@ -205,12 +206,13 @@ export default function App() {
                 placeholder="Search mosques..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`form-control rounded-pill ${darkMode ? 'bg-secondary text-white' : 'bg-light text-dark'}`}
+                className={`form-control rounded-pill ${darkMode ? 'bg-secondary border-secondary text-white' : 'bg-light text-dark'}`}
+                style={{ caretColor: darkMode ? 'white' : 'black' }}
               />
-              <i className="bi bi-search position-absolute end-0 top-50 translate-middle-y pe-3 text-muted"></i>
+              <i className={`bi bi-search position-absolute end-0 top-50 translate-middle-y pe-3 ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}></i>
             </div>
             
-            <h2 className="fs-5 fw-semibold mb-3">Nearby Mosques</h2>
+            <h2 className="fs-5 fw-semibold mb-3">🕌 Nearby Mosques</h2>
             
             {loading ? (
               <div className="d-flex justify-content-center py-4">
@@ -233,24 +235,24 @@ export default function App() {
                       style={{ cursor: 'pointer' }}
                     >
                       <h3 className="fw-medium fs-6 mb-1">{mosque.name}</h3>
-                      <p className="text-muted small mb-1">{mosque.address}</p>
+                      <p className={`small mb-1 ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>{mosque.address}</p>
                       <div className="d-flex justify-content-between align-items-center mt-2">
                         <span className="d-flex align-items-center small">
                           <i className="bi bi-geo-alt me-1 small"></i>
-                          {mosque.distance} km
+                          <span className={darkMode ? 'text-light text-opacity-75' : ''}>{mosque.distance} km</span>
                         </span>
                         {mosque.rating && (
                           <span className="d-flex align-items-center small">
                             <span className="text-warning me-1">★</span>
                             {mosque.rating} 
-                            {mosque.userRatingsTotal && <span className="text-muted ms-1 smaller">({mosque.userRatingsTotal})</span>}
+                            {mosque.userRatingsTotal && <span className={`ms-1 smaller ${darkMode ? 'text-light text-opacity-50' : 'text-muted'}`}>({mosque.userRatingsTotal})</span>}
                           </span>
                         )}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-center py-4 text-muted">No mosques found</p>
+                  <p className={`text-center py-4 ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>No mosques found</p>
                 )}
               </div>
             )}
@@ -262,8 +264,8 @@ export default function App() {
           <div id="map" className="w-100 h-100"></div>
           
           {/* Mobile bottom list */}
-          <div className="d-md-none fixed-bottom rounded-top shadow bg-white dark-mode-bg" style={{ maxHeight: '240px', overflowY: 'auto' }}>
-            <div className="p-3 border-bottom">
+          <div className={`d-md-none fixed-bottom rounded-top shadow ${darkMode ? 'bg-dark' : 'bg-white'}`} style={{ maxHeight: '240px', overflowY: 'auto' }}>
+            <div className={`p-3 ${darkMode ? 'border-secondary' : ''} border-bottom`}>
               <h2 className="fs-5 fw-semibold">Nearby Mosques</h2>
             </div>
             
@@ -288,7 +290,7 @@ export default function App() {
                   >
                     <h3 className="fw-medium fs-6 mb-1">{mosque.name}</h3>
                     <div className="d-flex justify-content-between align-items-center">
-                      <span className="small text-muted">{mosque.distance} km</span>
+                      <span className={`small ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>{mosque.distance} km</span>
                       {mosque.rating && (
                         <span className="small"><span className="text-warning">★</span> {mosque.rating}</span>
                       )}
@@ -303,14 +305,14 @@ export default function App() {
           {selectedMosque && (
             <div className={`position-absolute top-0 end-0 m-3 p-3 rounded shadow ${darkMode ? 'bg-dark' : 'bg-white'}`} style={{ maxWidth: '280px' }}>
               <h3 className="fw-bold fs-5">{selectedMosque.name}</h3>
-              <p className="small text-muted mb-2">{selectedMosque.address}</p>
+              <p className={`small mb-2 ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>{selectedMosque.address}</p>
               <div className="d-flex align-items-center mb-1">
                 <i className="bi bi-clock me-2 text-muted small"></i>
-                <span className="small text-muted">Open hours: Check Google Maps</span>
+                <span className={`small ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>Open hours: Check Google Maps</span>
               </div>
               <div className="d-flex align-items-center mb-3">
                 <i className="bi bi-geo-alt me-2 text-muted small"></i>
-                <span className="small text-muted">{selectedMosque.distance} km away</span>
+                <span className={`small ${darkMode ? 'text-light text-opacity-75' : 'text-muted'}`}>{selectedMosque.distance} km away</span>
               </div>
               <a
                 href={getDirectionsUrl(selectedMosque)}
@@ -352,6 +354,10 @@ export default function App() {
         
         .transition {
           transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .form-control::placeholder {
+          color: ${darkMode ? 'rgba(255,255,255,0.6)' : ''};
         }
       `}</style>
     </div>
